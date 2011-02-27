@@ -36,6 +36,7 @@ module Merb
       def write(key, data = nil, parameters = {}, conditions = {})
         if writable?(key, parameters, conditions)
           method = conditions && conditions[:unless_exist] ? :setnx : :set
+          conditions[:raw] = true
           @data.send method, normalize(key, parameters), data, conditions
         end
       end
